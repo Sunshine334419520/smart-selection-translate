@@ -1,0 +1,8 @@
+node_modules/
+*.log
+*.lock
+.dsh-ops-*
+.DS_Store
+Thumbs.db
+.selftest
+.selftest.json

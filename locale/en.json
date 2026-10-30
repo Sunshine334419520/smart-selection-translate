@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Smart Selection Translate",
+    "description": "Translate selected English text in place: single words get a dictionary entry (IPA, senses, web meanings, pronunciation), sentences use machine translation."
+  }
+}
