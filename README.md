@@ -70,35 +70,6 @@ git clone https://github.com/Sunshine334419520/smart-selection-translate.git
 
 设置保存在浏览器 `localStorage`（键 `dsh.smart-selection-translate.v1`），不随会话变化。
 
-## 工作原理
-
-### 两条通道
-
-| 选中内容 | 通道 | 来源 |
-|---|---|---|
-| 1–3 个英文词 | `GET /api/smart-selection-translate/dict` | 有道 `jsonapi` 或必应词典页 |
-| 句子 / 段落 | `POST /api/smart-selection-translate/translate` | `ctx.translator` |
-| 发音 | `GET /api/smart-selection-translate/audio` | 有道 `dictvoice`，失败回落 `speechSynthesis` |
-
-词典查询失败或未收录时，客户端自动回落到机器翻译，不会出现空卡片。
-
-### 为什么由 Host 发请求
-
-匿名翻译端点（Bing/Google）不给浏览器跨域，词典页也带反爬指纹；由 Host 统一出网既绕开 CORS，也不把任何凭据放进页面。
-
-路由注册优先走 `ctx.connection.fetch.register()`（挂在 `/api` 下，由载体做 Origin 围栏与会话认证）；拿不到 `connection` 时退回 `ctx.webServer.register({ kind: 'exact' })` 的裸 node 处理器。
-
-### 翻译服务的解析
-
-`translator` 由本 bundle 的 patch 行插入在 profile 根作用域，但插件的 `apply` 可能早于它注册完成，所以每次请求都重新解析：
-
-1. `ctx.get('translator')`
-2. 退回到任意活跃 Agent 的 `agent.ctx.get('translator')`（会话作用域）
-
-### 选中判定
-
-监听 `mouseup`（拖选）与 `keyup`（Shift 选区），去抖后读取 `window.getSelection()`；`dblclick` 只在选区为空时用 `caretRangeFromPoint` 兜底取词。输入框、`contenteditable`、以及插件自己的卡片内不触发。
-
 ## 界面规范
 
 | 元素 | 取值 |
