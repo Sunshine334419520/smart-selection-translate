@@ -1,0 +1,46 @@
+{
+  "format": 1,
+  "title": {
+    "zh": "智能划词翻译",
+    "en": "Smart Selection Translate"
+  },
+  "description": {
+    "zh": "个人维护的 DSH 插件索引。",
+    "en": "A personal DSH plugin index."
+  },
+  "plugins": [
+    {
+      "name": "dsh-smart-selection-translate",
+      "title": {
+        "zh": "智能划词翻译",
+        "en": "Smart Selection Translate"
+      },
+      "description": {
+        "zh": "选中英文就地翻译：单词出词典条目（音标、词性释义、网络释义、真人发音），句子走机器翻译。",
+        "en": "Translate selected English in place: single words get a dictionary entry with IPA, senses and pronunciation; sentences use machine translation."
+      },
+      "author": "Sunshine334419520",
+      "homepage": "https://github.com/Sunshine334419520/smart-selection-translate",
+      "repository": {
+        "url": "https://github.com/Sunshine334419520/smart-selection-translate"
+      },
+      "metadata": {
+        "category": "ui",
+        "keywords": ["translation", "dictionary", "word-selection", "划词翻译"]
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793347471,
+          "source": {
+            "type": "npm",
+            "registry": "https://registry.npmjs.org/"
+          },
+          "engines": {
+            "dsh": "^0.2.0-rc.1"
+          }
+        }
+      ]
+    }
+  ]
+}

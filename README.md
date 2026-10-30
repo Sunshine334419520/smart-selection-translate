@@ -28,11 +28,21 @@
 
 插件以 DeepSeek Harness 的 *bundle* 形式分发，装进某个 profile 后对所有会话生效，重启仍在。
 
+**插件市场**：在「插件 → 发现」里搜索「智能划词翻译」一键安装；或在「发现 → 添加索引源」里加上索引地址后浏览。
+
+**命令行**：
+
+```bash
+dsh plugin --profile desktop add dsh-smart-selection-translate
+```
+
+**源码**：
+
 ```bash
 git clone https://github.com/Sunshine334419520/smart-selection-translate.git
 ```
 
-然后在 Harness 里用 Plugin Manager 安装该目录（`install_bundle` 的 target 指向仓库根目录）。安装完成后刷新页面。
+然后在 Harness 的 Plugin Manager 里安装该目录，完成后刷新页面。
 
 ### 依赖
 
