@@ -162,12 +162,38 @@ window.__ModuleLoader__.load({
       return settings
     }
 
-    function isZhUI() {
+    let clientCtx = null
+
+    /**
+     * UI language of the host, not of the browser engine: the desktop shell
+     * starts Chromium with `--lang=en-US`, so `navigator.language` reports
+     * English even when the Harness UI runs in Chinese. Prefer the host locale
+     * service, then the `lang` attribute the locale service keeps in sync on
+     * <html>, and only then the navigator.
+     */
+    function hostLanguage() {
       try {
-        return String(navigator.language || '').toLowerCase().indexOf('zh') === 0
+        const locale = clientCtx && typeof clientCtx.get === 'function' ? clientCtx.get('locale') : null
+        const snapshot = locale && typeof locale.getSnapshot === 'function' ? locale.getSnapshot() : null
+        if (snapshot && snapshot.active) return String(snapshot.active)
       } catch (error) {
-        return false
+        /* the locale service is not visible from this context */
       }
+      try {
+        const documentLang = document.documentElement && document.documentElement.lang
+        if (documentLang) return String(documentLang)
+      } catch (error) {
+        /* no document (non-browser consumer) */
+      }
+      try {
+        return String(navigator.language || '')
+      } catch (error) {
+        return ''
+      }
+    }
+
+    function isZhUI() {
+      return hostLanguage().toLowerCase().indexOf('zh') === 0
     }
 
     function t(key) {
@@ -1032,6 +1058,7 @@ window.__ModuleLoader__.load({
     return {
       inject: ['slots'],
       apply(ctx) {
+        clientCtx = ctx
         ctx.slots.inject('shell.overlay', () =>
           ctx.slots.register({ name: 'shell.overlay', id: 'smart-selection-translate', order: 20 }, TranslatorOverlay),
         )

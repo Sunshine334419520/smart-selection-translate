@@ -1,6 +1,6 @@
 {
   "name": "dsh-smart-selection-translate",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "选中英文就地翻译的 DeepSeek Harness 插件：单词出词典条目（音标、词性释义、网络释义、真人发音），句子走机器翻译。",
   "type": "module",
   "icon": "./icon.svg",

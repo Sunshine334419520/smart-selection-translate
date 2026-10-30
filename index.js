@@ -478,9 +478,7 @@ const ROUTES = [
 
 export function apply(ctx) {
   const disposers = []
-  const connection = readService(ctx, 'connection')
-  const fetchRegistry = connection && connection.fetch
-  const webServer = readService(ctx, 'webServer')
+  let connection = null
 
   const finish = () => {
     for (const dispose of disposers) {
@@ -494,7 +492,17 @@ export function apply(ctx) {
     disposers.length = 0
   }
 
-  if (fetchRegistry && typeof fetchRegistry.register === 'function') {
+  /*
+   * A service is only visible to a context that declared it: from dsh
+   * 0.2.1-rc.5 on, `ctx.get('connection')` / `ctx.get('webServer')` on an
+   * undeclared context return null, so the old read-then-register shape
+   * registered neither transport and every browser call fell through to
+   * "宿主半没有应答". Inject the service first, then read it.
+   */
+  ctx.inject(['connection'], (injected) => {
+    connection = injected.connection
+    const fetchRegistry = connection && connection.fetch
+    if (!fetchRegistry || typeof fetchRegistry.register !== 'function') return
     for (const route of ROUTES) {
       disposers.push(
         fetchRegistry.register({
@@ -505,7 +513,11 @@ export function apply(ctx) {
         }),
       )
     }
-  } else if (webServer && typeof webServer.register === 'function') {
+  })
+
+  ctx.inject(['webServer'], (injected) => {
+    const webServer = injected.webServer
+    if (!webServer || typeof webServer.register !== 'function') return
     const guarded = (request) => {
       if (typeof connection?.requestRejection === 'function') {
         try {
@@ -558,7 +570,7 @@ export function apply(ctx) {
         }),
       )
     }
-  }
+  })
 
-  ctx.effect(() => finish)
+  ctx.effect(() => finish, 'smart-selection-translate: host routes')
 }
