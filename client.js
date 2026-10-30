@@ -8,7 +8,7 @@
  */
 
 window.__ModuleLoader__.load({
-  id: '@local/smart-selection-translate',
+  id: 'dsh-smart-selection-translate',
   factory(require) {
     const React = require('react')
     const h = React.createElement
