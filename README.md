@@ -70,38 +70,6 @@ git clone https://github.com/Sunshine334419520/smart-selection-translate.git
 
 设置保存在浏览器 `localStorage`（键 `dsh.smart-selection-translate.v1`），不随会话变化。
 
-## 界面规范
-
-| 元素 | 取值 |
-|---|---|
-| 设置行 | `padding:16px 0`、`.5px solid var(--dsw-alias-border-l2)` 分隔线、标题 14/20、说明 12/18、`gap:24`（照宿主 `DeveloperToolsRow`） |
-| 卡片 | `bg-layer-1` 底 + 双层阴影 + 12 圆角 + `.5px` 描边 |
-| 开关 | 32×20、圆角 999；开启深色轨道 + 白滑块，关闭浅灰轨道 + 白滑块 |
-| 文本 | 全部走 `--dsw-alias-label-primary` / `-secondary`，不写死颜色 |
-
-关闭态轨道用 `color-mix(in srgb, var(--dsw-alias-label-primary) 14%, transparent)` 而不是 `bg-layer-2`——后者在亮色主题下就是白色，会和滑块糊在一起。
-
-## 目录结构
-
-```
-smart-selection-translate/
-├── index.js              # Host 半：4 条路由、词典解析、翻译转发
-├── client.js             # Client 半：选区监听、卡片、设置页
-├── cordis.patch.yml      # bundle 的 Loader 补丁
-├── package.json          # dsh.bundle / dsh.client 声明
-├── locale/{zh,en}.json   # 插件页标题与描述
-├── icon.svg
-└── test/host.test.mjs    # Host 半单测
-```
-
-## 开发
-
-```bash
-node --test test/host.test.mjs   # 27 项
-```
-
-覆盖：入参校验、上限截断、未知引擎回落、付费路由强制 `sessionId`、错误码透传、取消信号、路由注销，以及有道 / 必应两种词条 payload 的归一化。
-
 ## 已知限制
 
 - PDF / Office / 部分 HTML 预览取不到文字层，划词不生效。
