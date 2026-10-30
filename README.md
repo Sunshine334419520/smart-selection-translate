@@ -16,13 +16,13 @@
 
 ## 截图
 
-> 待补充。放置于 `docs/screenshots/`，替换下列链接即可。
+**单词** — 英/美音标与发音按钮、按词性分组的释义、网络释义。
 
-| 场景 | 文件 |
-|---|---|
-| 单词词条卡片 | `docs/screenshots/card-word.png` |
-| 句子翻译卡片 | `docs/screenshots/card-sentence.png` |
-| 设置页 | `docs/screenshots/settings.png` |
+![单词词条卡片](docs/screenshots/card-word.png)
+
+**句子** — 整句译文，底部可朗读、可复制。
+
+![句子翻译卡片](docs/screenshots/card-sentence.png)
 
 ## 安装
 
