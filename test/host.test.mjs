@@ -55,6 +55,11 @@ function createHost(options = {}) {
       ? { fetch: { register(route) { routes.push(route); return () => {} } } }
       : options.connection
 
+  const injected = {
+    connection,
+    webServer: options.webServer,
+  }
+
   const ctx = {
     get(name) {
       if (name === 'translator') return rootTranslator
@@ -62,6 +67,14 @@ function createHost(options = {}) {
       if (name === 'connection') return connection
       if (name === 'webServer') return options.webServer
       return undefined
+    },
+    // The host half declares `connection` / `webServer` through ctx.inject and
+    // reads them from the injected scope; the fake runs the callback at once.
+    inject(names, callback) {
+      const scope = {}
+      for (const name of names) scope[name] = injected[name]
+      callback(scope)
+      return () => {}
     },
     effect(callback) {
       effects.push(callback)
