@@ -21,13 +21,19 @@ npm view dsh-smart-selection-translate version   # 0.1.2
 
 [`index.json`](index.json) 是合法的 format-1 索引，已指向 npm 上的 0.1.2（`publishTimestamp` = npm 的真实发布时间）。
 
-raw 地址：
+raw 地址（国内常被墙，实测 000）：
 
 ```
 https://raw.githubusercontent.com/Sunshine334419520/smart-selection-translate/main/docs/publish/index.json
 ```
 
-用法：**插件 → 发现 → 添加索引源**，粘贴该地址，即可在市场里搜到并一键安装。不需要审核、不需要 GitHub Pages。
+**推荐用 jsDelivr 镜像**（实测 200，已校验 format 1）：
+
+```
+https://cdn.jsdelivr.net/gh/Sunshine334419520/smart-selection-translate@main/docs/publish/index.json
+```
+
+用法：**插件 → 发现 → 添加索引源**，粘贴上面的地址，即可在市场里搜到并一键安装。不需要审核、不需要 GitHub Pages。
 
 ## 3. 可视化市场（dshmarket）
 
